@@ -251,7 +251,18 @@ const translations = {
     district_placeholder: "Tumanni kiriting",
     phone_placeholder: "Telefon raqamini kiriting",
     all_fields_required: "Barcha maydonlar to'ldirilishi shart!",
-    back_to_site: "Asosiy sahifaga qaytish"
+    back_to_site: "Asosiy sahifaga qaytish",
+    
+    // Weekdays
+    monday: "Dushanba",
+    tuesday: "Seshanba",
+    wednesday: "Chorshanba",
+    thursday: "Payshanba",
+    friday: "Juma",
+    saturday: "Shanba",
+    sunday: "Yakshanba",
+    previous_week: "Oldingi hafta",
+    next_week: "Keyingi hafta"
   },
   
   en: {
@@ -506,7 +517,18 @@ const translations = {
     next: "Next",
     previous: "Previous",
     page: "Page",
-    of: "of"
+    of: "of",
+    
+    // Weekdays
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sunday: "Sunday",
+    previous_week: "Previous Week",
+    next_week: "Next Week"
   },
   
   kr: {
@@ -761,7 +783,18 @@ const translations = {
     district_placeholder: "구역 입력",
     phone_placeholder: "전화번호 입력",
     all_fields_required: "모든 필드가 필요합니다!",
-    back_to_site: "메인 사이트로 돌아가기"
+    back_to_site: "메인 사이트로 돌아가기",
+    
+    // Weekdays
+    monday: "월요일",
+    tuesday: "화요일",
+    wednesday: "수요일",
+    thursday: "목요일",
+    friday: "금요일",
+    saturday: "토요일",
+    sunday: "일요일",
+    previous_week: "이전 주",
+    next_week: "다음 주"
   }
 };
 

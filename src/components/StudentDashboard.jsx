@@ -16,37 +16,48 @@ const StudentDashboard = () => {
   const [attendanceData, setAttendanceData] = useState({});
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dateColumns, setDateColumns] = useState([]);
+  const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
   const [editingStudent, setEditingStudent] = useState(null);
   const [editFormData, setEditFormData] = useState({});
 
-  // Sana mantiqi - 1 apreldan boshlab
+  // Get current week dates
   useEffect(() => {
-    const startDate = new Date(2025, 3, 1); // 1-aprel 2025
-    const today = new Date();
-    const days = [];
-    
-    // Faqat ish kunlarini (Dushanba-Juma) qo'shamiz
-    for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
-      const dayOfWeek = d.getDay();
-      if (dayOfWeek >= 1 && dayOfWeek <= 5) { // 1=Dushanba, 5=Juma
+    const getWeekDates = (startDate) => {
+      const days = [];
+      const startOfWeek = new Date(startDate);
+      
+      // Find Monday of the week
+      const dayOfWeek = startOfWeek.getDay();
+      const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Sunday = 0, Monday = 1
+      startOfWeek.setDate(startOfWeek.getDate() + mondayOffset);
+      
+      // Generate 7 days from Monday to Sunday
+      for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(startOfWeek);
+        currentDate.setDate(startOfWeek.getDate() + i);
+        
         days.push({
-          date: new Date(d),
-          dateString: d.toLocaleDateString('uz-UZ'),
-          dayName: d.toLocaleDateString('uz-UZ', { weekday: 'long' })
+          date: currentDate,
+          dateString: currentDate.toLocaleDateString('uz-UZ'),
+          dayOfWeek: currentDate.getDay(),
+          isWeekend: currentDate.getDay() === 0 || currentDate.getDay() === 6 // Sunday = 0, Saturday = 6
         });
       }
-    }
+      
+      return days;
+    };
+
+    const weekDates = getWeekDates(currentWeekStart);
+    setDateColumns(weekDates);
     
-    setDateColumns(days);
-    
-    // Simulate attendance data
+    // Simulate attendance data for the week
     const simulatedAttendance = {};
-    days.forEach((day, index) => {
+    weekDates.forEach((day) => {
       const presentCount = Math.floor(Math.random() * 5) + students.length - 5; // 14-19 talaba
       simulatedAttendance[day.dateString] = presentCount;
     });
     setAttendanceData(simulatedAttendance);
-  }, [students]);
+  }, [currentWeekStart, students]);
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -108,6 +119,18 @@ const StudentDashboard = () => {
   const handleCancelEdit = () => {
     setIsEditing(false);
     setEditFormData(selectedStudent);
+  };
+
+  const handlePreviousWeek = () => {
+    const newWeekStart = new Date(currentWeekStart);
+    newWeekStart.setDate(newWeekStart.getDate() - 7);
+    setCurrentWeekStart(newWeekStart);
+  };
+
+  const handleNextWeek = () => {
+    const newWeekStart = new Date(currentWeekStart);
+    newWeekStart.setDate(newWeekStart.getDate() + 7);
+    setCurrentWeekStart(newWeekStart);
   };
 
   const handleDeleteStudent = () => {
@@ -234,9 +257,33 @@ const StudentDashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          {/* Table Header */}
+          {/* Table Header with Week Navigation */}
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-4">
-            <h2 className="text-white font-semibold text-lg">{t.attendance_table}</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-white font-semibold text-lg">{t.attendance_table}</h2>
+              <div className="flex items-center space-x-2">
+                <motion.button
+                  onClick={handlePreviousWeek}
+                  className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </motion.button>
+                <span className="text-white text-sm font-medium">
+                  {dateColumns[0]?.date.toLocaleDateString('uz-UZ', { month: 'short', day: 'numeric' })} - 
+                  {dateColumns[6]?.date.toLocaleDateString('uz-UZ', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
+                <motion.button
+                  onClick={handleNextWeek}
+                  className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowLeft className="w-4 h-4 rotate-180" />
+                </motion.button>
+              </div>
+            </div>
           </div>
 
           {/* Scrollable Table */}
@@ -249,19 +296,27 @@ const StudentDashboard = () => {
                   </th>
                                     
                   {/* Dynamic Date Columns */}
-                  {dateColumns.slice(-7).map((day, index) => (
-                    <th
-                      key={index}
-                      className={`px-4 py-3 text-center text-xs font-medium uppercase tracking-wider ${
-                        day.dayName === 'Shanba' || day.dayName === 'Yakshanba'
-                          ? 'text-gray-400 bg-gray-100 dark:bg-gray-700'
-                          : 'text-gray-700 dark:text-gray-300'
-                      }`}
-                    >
-                      <div>{day.dayName}</div>
-                      <div className="text-xs opacity-75">{day.dateString}</div>
-                    </th>
-                  ))}
+                  {dateColumns.map((day, index) => {
+                    const weekdayNames = [
+                      t.sunday, t.monday, t.tuesday, t.wednesday, 
+                      t.thursday, t.friday, t.saturday
+                    ];
+                    const weekdayName = weekdayNames[day.dayOfWeek];
+                    
+                    return (
+                      <th
+                        key={index}
+                        className={`px-4 py-3 text-center text-xs font-medium uppercase tracking-wider ${
+                          day.isWeekend
+                            ? 'text-gray-400 bg-gray-100 dark:bg-gray-700'
+                            : 'text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        <div>{weekdayName}</div>
+                        <div className="text-xs opacity-75">{day.dateString}</div>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -286,22 +341,21 @@ const StudentDashboard = () => {
                     </td>
                                         
                     {/* Dynamic Attendance Data */}
-                    {dateColumns.slice(-7).map((day, dayIndex) => {
-                      const isWeekend = day.dayName === 'Shanba' || day.dayName === 'Yakshanba';
+                    {dateColumns.map((day, dayIndex) => {
                       const isPresent = Math.random() > 0.1; // 90% chance of being present
                       
                       return (
                         <td
                           key={dayIndex}
                           className={`px-4 py-4 text-center text-sm ${
-                            isWeekend
+                            day.isWeekend
                               ? 'bg-gray-100 dark:bg-gray-700'
                               : isPresent
                               ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400'
                               : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'
                           }`}
                         >
-                          {isWeekend ? (
+                          {day.isWeekend ? (
                             <span className="text-gray-400">-</span>
                           ) : (
                             <span className="font-medium">
