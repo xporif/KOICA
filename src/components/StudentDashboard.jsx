@@ -14,11 +14,13 @@ const StudentDashboard = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [attendanceData, setAttendanceData] = useState({});
-  const [currentDate, setCurrentDate] = useState(new Date());
   const [dateColumns, setDateColumns] = useState([]);
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
   const [editingStudent, setEditingStudent] = useState(null);
   const [editFormData, setEditFormData] = useState({});
+
+  // Initialize attendance state for tracking student attendance
+  const [attendance, setAttendance] = useState({});
 
   // Get current week dates
   useEffect(() => {
@@ -131,6 +133,14 @@ const StudentDashboard = () => {
     const newWeekStart = new Date(currentWeekStart);
     newWeekStart.setDate(newWeekStart.getDate() + 7);
     setCurrentWeekStart(newWeekStart);
+  };
+
+  const handleAttendanceToggle = (studentId, dateString) => {
+    const key = `${studentId}-${dateString}`;
+    setAttendance(prev => ({
+      ...prev,
+      [key]: !prev[key] // Toggle between true/false
+    }));
   };
 
   const handleDeleteStudent = () => {
@@ -342,25 +352,31 @@ const StudentDashboard = () => {
                                         
                     {/* Dynamic Attendance Data */}
                     {dateColumns.map((day, dayIndex) => {
-                      const isPresent = Math.random() > 0.1; // 90% chance of being present
+                      const attendanceKey = `${student.id}-${day.dateString}`;
+                      const isPresent = attendance[attendanceKey];
                       
                       return (
                         <td
                           key={dayIndex}
                           className={`px-4 py-4 text-center text-sm ${
                             day.isWeekend
-                              ? 'bg-gray-100 dark:bg-gray-700'
-                              : isPresent
-                              ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400'
-                              : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'
+                              ? 'bg-gray-100 dark:bg-gray-700 cursor-not-allowed'
+                              : 'cursor-pointer hover:scale-105 transition-all duration-200'
                           }`}
+                          onClick={() => !day.isWeekend && handleAttendanceToggle(student.id, day.dateString)}
                         >
                           {day.isWeekend ? (
-                            <span className="text-gray-400">-</span>
+                            <div className="w-8 h-8 bg-gray-200 dark:bg-gray-600 rounded"></div>
                           ) : (
-                            <span className="font-medium">
-                              {isPresent ? '+' : '-'}
-                            </span>
+                            <motion.div
+                              className={`w-8 h-8 rounded cursor-pointer transition-colors duration-200 ${
+                                isPresent
+                                  ? 'bg-green-500'
+                                  : 'bg-white border border-gray-300 hover:border-gray-400'
+                              }`}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                            />
                           )}
                         </td>
                       );
