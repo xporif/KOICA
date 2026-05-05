@@ -173,7 +173,7 @@ const translations = {
     footer_follow_us: "Bizni kuzating",
     footer_stay_connected: "Yangiliklar va yangiliklar uchun bog‘laning.",
     footer_rights: "Barcha huquqlar himoyalangan.",
-    footer_group_project: "Guruh 20 loyihasi",
+    footer_group_project: "Guruh 20 Boboxujayev Orif loyihasi",
     footer_created_with: "KOICA uchun ❤️ bilan yaratilgan",
     
     // Common
@@ -365,7 +365,7 @@ const translations = {
     footer_follow_us: "Follow Us",
     footer_stay_connected: "Stay connected for updates and news.",
     footer_rights: "All rights reserved.",
-    footer_group_project: "Group 20 Project",
+    footer_group_project: "Group 20 Boboxujayev Orif Project",
     footer_created_with: "Created with ❤️ for KOICA",
     
     // Common
@@ -557,7 +557,7 @@ const translations = {
     footer_follow_us: "팔로우하기",
     footer_stay_connected: "업데이트와 뉴스를 위해 연결되어 있으세요.",
     footer_rights: "모든 권리 보유.",
-    footer_group_project: "그룹 20 프로젝트",
+    footer_group_project: "그룹 20 Boboxujayev Orif 프로젝트",
     footer_created_with: "KOICA를 위해 ❤️로 만들어짐",
     
     // Common
