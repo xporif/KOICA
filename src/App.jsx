@@ -10,6 +10,7 @@ import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
 import DropoutRiskAnalyzer from './components/DropoutRiskAnalyzer';
+import StudentDashboard from './components/StudentDashboard';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ function App() {
           <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
           
           {isLoggedIn ? (
-            <DropoutRiskAnalyzer />
+            <StudentDashboard />
           ) : (
             <>
               <Hero />
