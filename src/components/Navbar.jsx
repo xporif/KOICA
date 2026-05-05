@@ -79,10 +79,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                   whileTap={{ scale: 0.95 }}
                   title={lang.name}
                 >
-                  <span className="flex items-center space-x-1">
-                    <span>{lang.flag}</span>
-                    <span className="text-xs">{lang.name}</span>
-                  </span>
+                  <span className="text-xs font-medium">{lang.name}</span>
                 </motion.button>
               ))}
             </div>
@@ -96,7 +93,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               >
                 {availableLanguages.map((lang) => (
                   <option key={lang.code} value={lang.code}>
-                    {lang.flag} {lang.name}
+                    {lang.name}
                   </option>
                 ))}
               </select>
@@ -148,10 +145,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <span className="flex items-center space-x-1">
-                        <span>{lang.flag}</span>
-                        <span>{lang.name}</span>
-                      </span>
+                      <span className="text-xs font-medium">{lang.name}</span>
                     </motion.button>
                   ))}
                 </div>

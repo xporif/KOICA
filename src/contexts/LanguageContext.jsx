@@ -36,9 +36,9 @@ export const LanguageProvider = ({ children }) => {
     setLanguage: changeLanguage,
     t,
     availableLanguages: [
-      { code: 'uz', name: 'UZ', flag: '🇺🇿' },
-      { code: 'en', name: 'EN', flag: '🇬🇧' },
-      { code: 'kr', name: 'KR', flag: '🇰🇷' }
+      { code: 'uz', name: 'UZ', flag: '' },
+      { code: 'en', name: 'EN', flag: '' },
+      { code: 'kr', name: 'KR', flag: '' }
     ]
   };
 
