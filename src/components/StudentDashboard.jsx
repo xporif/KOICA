@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Plus, Users, Calendar, LogOut, User, Phone, MapPin, CalendarDays, Home, ArrowLeft } from 'lucide-react';
+import { Plus, Users, Calendar, LogOut, User, Phone, MapPin, CalendarDays, Home, ArrowLeft, Edit2, Save, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { initialStudents } from '../data/students';
 import AddStudentModal from './AddStudentModal';
+import Navbar from './Navbar';
 
 const StudentDashboard = () => {
   const { t } = useLanguage();
@@ -13,6 +14,8 @@ const StudentDashboard = () => {
   const [attendanceData, setAttendanceData] = useState({});
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dateColumns, setDateColumns] = useState([]);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [editFormData, setEditFormData] = useState({});
 
   // Sana mantiqi - 1 apreldan boshlab
   useEffect(() => {
@@ -73,11 +76,39 @@ const StudentDashboard = () => {
     return Math.round((totalPresent / totalPossible) * 100);
   };
 
+  const handleEditStudent = (student) => {
+    setEditingStudent(student.id);
+    setEditFormData(student);
+  };
+
+  const handleSaveEdit = () => {
+    setStudents(students.map(student => 
+      student.id === editingStudent ? editFormData : student
+    ));
+    setEditingStudent(null);
+    setEditFormData({});
+  };
+
+  const handleCancelEdit = () => {
+    setEditingStudent(null);
+    setEditFormData({});
+  };
+
+  const handleEditChange = (field, value) => {
+    setEditFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
+      {/* Navbar */}
+      <Navbar darkMode={false} setDarkMode={() => {}} />
+      
       {/* Sticky Header */}
       <motion.div
-        className="sticky top-0 z-40 glass border-b border-white/20"
+        className="sticky top-16 z-40 glass border-b border-white/20"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
@@ -241,29 +272,132 @@ const StudentDashboard = () => {
                     transition={{ delay: 0.05 * index }}
                   >
                     <td className="px-4 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <User className="w-4 h-4 text-gray-400 mr-2" />
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {student.fullName}
-                        </span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <User className="w-4 h-4 text-gray-400 mr-2" />
+                          {editingStudent === student.id ? (
+                            <input
+                              type="text"
+                              value={editFormData.fullName}
+                              onChange={(e) => handleEditChange('fullName', e.target.value)}
+                              className="text-sm font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          ) : (
+                            <span 
+                              className="text-sm font-medium text-gray-900 dark:text-white cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                              onClick={() => handleEditStudent(student)}
+                            >
+                              {student.fullName}
+                            </span>
+                          )}
+                        </div>
+                        {editingStudent === student.id && (
+                          <div className="flex space-x-1">
+                            <motion.button
+                              onClick={handleSaveEdit}
+                              className="p-1 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <Save className="w-4 h-4" />
+                            </motion.button>
+                            <motion.button
+                              onClick={handleCancelEdit}
+                              className="p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/20 rounded"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <X className="w-4 h-4" />
+                            </motion.button>
+                          </div>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {student.birthDate}
+                      {editingStudent === student.id ? (
+                        <input
+                          type="date"
+                          value={editFormData.birthDate}
+                          onChange={(e) => handleEditChange('birthDate', e.target.value)}
+                          className="bg-white dark:bg-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <span 
+                          className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                          onClick={() => handleEditStudent(student)}
+                        >
+                          {student.birthDate}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                       <div className="flex items-center">
                         <MapPin className="w-4 h-4 text-gray-400 mr-2" />
-                        {student.region}
+                        {editingStudent === student.id ? (
+                          <select
+                            value={editFormData.region}
+                            onChange={(e) => handleEditChange('region', e.target.value)}
+                            className="bg-white dark:bg-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="Toshkent">Toshkent</option>
+                            <option value="Samarqand">Samarqand</option>
+                            <option value="Buxoro">Buxoro</option>
+                            <option value="Andijon">Andijon</option>
+                            <option value="Farg‘ona">Farg‘ona</option>
+                            <option value="Namangan">Namangan</option>
+                            <option value="Jizzax">Jizzax</option>
+                            <option value="Qashqadaryo">Qashqadaryo</option>
+                            <option value="Sirdaryo">Sirdaryo</option>
+                            <option value="Surxondaryo">Surxondaryo</option>
+                            <option value="Qoraqalpog‘iston">Qoraqalpog‘iston</option>
+                            <option value="Xorazm">Xorazm</option>
+                            <option value="Navoiy">Navoiy</option>
+                          </select>
+                        ) : (
+                          <span 
+                            className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                            onClick={() => handleEditStudent(student)}
+                          >
+                            {student.region}
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {student.district}
+                      {editingStudent === student.id ? (
+                        <input
+                          type="text"
+                          value={editFormData.district}
+                          onChange={(e) => handleEditChange('district', e.target.value)}
+                          className="bg-white dark:bg-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <span 
+                          className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                          onClick={() => handleEditStudent(student)}
+                        >
+                          {student.district}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                       <div className="flex items-center">
                         <Phone className="w-4 h-4 text-gray-400 mr-2" />
-                        {student.phone}
+                        {editingStudent === student.id ? (
+                          <input
+                            type="tel"
+                            value={editFormData.phone}
+                            onChange={(e) => handleEditChange('phone', e.target.value)}
+                            className="bg-white dark:bg-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        ) : (
+                          <span 
+                            className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                            onClick={() => handleEditStudent(student)}
+                          >
+                            {student.phone}
+                          </span>
+                        )}
                       </div>
                     </td>
                     

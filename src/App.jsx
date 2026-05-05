@@ -51,17 +51,15 @@ function App() {
               <Route 
                 path="/" 
                 element={
-                  !isLoggedIn ? (
-                    <>
-                      <Hero />
-                      <AboutKoica />
-                      <SamarkandCenter />
-                      <Features />
-                      <LocationContact />
-                      <Gallery />
-                      <Footer />
-                    </>
-                  ) : <Navigate to="/dashboard" replace />
+                  <>
+                    <Hero />
+                    <AboutKoica />
+                    <SamarkandCenter />
+                    <Features />
+                    <LocationContact />
+                    <Gallery />
+                    <Footer />
+                  </>
                 } 
               />
               
