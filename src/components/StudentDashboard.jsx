@@ -247,19 +247,7 @@ const StudentDashboard = () => {
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                     {t.student_name}
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                    {t.birth_date}
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                    {t.region}
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                    {t.district}
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                    {t.phone}
-                  </th>
-                  
+                                    
                   {/* Dynamic Date Columns */}
                   {dateColumns.slice(-7).map((day, index) => (
                     <th
@@ -296,25 +284,7 @@ const StudentDashboard = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {student.birthDate}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 text-gray-400 mr-2" />
-                        {student.region}
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      {student.district}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                      <div className="flex items-center">
-                        <Phone className="w-4 h-4 text-gray-400 mr-2" />
-                        {student.phone}
-                      </div>
-                    </td>
-                    
+                                        
                     {/* Dynamic Attendance Data */}
                     {dateColumns.slice(-7).map((day, dayIndex) => {
                       const isWeekend = day.dayName === 'Shanba' || day.dayName === 'Yakshanba';
