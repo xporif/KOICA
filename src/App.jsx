@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Loading from './components/Loading';
 import DropoutRiskAnalyzer from './components/DropoutRiskAnalyzer';
 import StudentDashboard from './components/StudentDashboard';
+import Login from './components/Login';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,12 @@ function App() {
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
             
             <Routes>
+              {/* Login Route */}
+              <Route 
+                path="/login" 
+                element={!isLoggedIn ? <Login /> : <Navigate to="/dashboard" replace />}
+              />
+              
               {/* Main KOICA Site Routes */}
               <Route 
                 path="/" 
@@ -67,7 +74,7 @@ function App() {
               <Route 
                 path="/dashboard" 
                 element={
-                  isLoggedIn ? <StudentDashboard /> : <Navigate to="/" replace />
+                  isLoggedIn ? <StudentDashboard /> : <Navigate to="/login" replace />
                 } 
               />
             </Routes>
