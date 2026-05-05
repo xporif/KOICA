@@ -1,32 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const LocationContact = () => {
+  const { t } = useLanguage();
+  
   const contactInfo = [
     {
       icon: <MapPin className="w-6 h-6" />,
-      title: "Address",
-      content: "Samarkand, Uzbekistan",
-      subtext: "Near Registan Square"
+      title: t.location_address,
+      content: t.location_address_content,
+      subtext: t.location_address_subtext
     },
     {
       icon: <Phone className="w-6 h-6" />,
-      title: "Phone",
-      content: "+998 90 123 45 67",
-      subtext: "Mon-Fri, 9:00 AM - 6:00 PM"
+      title: t.location_phone,
+      content: t.location_phone_content,
+      subtext: t.location_phone_subtext
     },
     {
       icon: <Mail className="w-6 h-6" />,
-      title: "Email",
-      content: "info@koica.uz",
-      subtext: "24/7 Support"
+      title: t.location_email,
+      content: t.location_email_content,
+      subtext: t.location_email_subtext
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Working Hours",
-      content: "9:00 AM - 6:00 PM",
-      subtext: "Monday to Friday"
+      title: t.location_working_hours,
+      content: t.location_working_hours_content,
+      subtext: t.location_working_hours_subtext
     }
   ];
 
@@ -41,10 +44,10 @@ const LocationContact = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-            Location & Contact
+            {t.location_title}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Visit us at our modern training center in the heart of Samarkand or reach out through our contact channels.
+            {t.location_description}
           </p>
         </motion.div>
 
@@ -59,7 +62,7 @@ const LocationContact = () => {
           >
             <div className="glass rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-                Get in Touch
+                {t.location_get_in_touch}
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,37 +103,37 @@ const LocationContact = () => {
               viewport={{ once: true }}
             >
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-                Send us a Message
+                {t.location_send_message}
               </h3>
               
               <form className="space-y-4">
                 <div>
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                    Name
+                    {t.location_name}
                   </label>
                   <input
                     type="text"
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    placeholder="Your Name"
+                    placeholder={t.location_your_name}
                   />
                 </div>
                 <div>
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                    Email
+                    {t.location_email_label}
                   </label>
                   <input
                     type="email"
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    placeholder="your@email.com"
+                    placeholder={t.location_your_email}
                   />
                 </div>
                 <div>
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                    Message
+                    {t.location_message}
                   </label>
                   <textarea
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 h-32"
-                    placeholder="Your message..."
+                    placeholder={t.location_your_message}
                   ></textarea>
                 </div>
                 <motion.button
@@ -139,7 +142,7 @@ const LocationContact = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Send Message
+                  {t.location_send}
                 </motion.button>
               </form>
             </motion.div>
@@ -154,7 +157,7 @@ const LocationContact = () => {
           >
             <div className="glass rounded-2xl p-8 h-full">
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-                Our Location
+                {t.location_our_location}
               </h3>
               
               {/* Google Maps Embed */}
@@ -175,13 +178,13 @@ const LocationContact = () => {
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span className="text-gray-700 dark:text-gray-300">
-                    Located in the historic city center
+                    {t.location_near_historic}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MessageCircle className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   <span className="text-gray-700 dark:text-gray-300">
-                    Easy access from public transportation
+                    {t.location_public_transport}
                   </span>
                 </div>
               </div>
@@ -199,11 +202,10 @@ const LocationContact = () => {
         >
           <div className="text-center">
             <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-              Visit Us Today
+              {t.location_visit_us}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-              Experience our modern facilities and meet our team. We offer guided tours 
-              every weekday and information sessions about our programs.
+              {t.location_visit_desc}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
@@ -211,14 +213,14 @@ const LocationContact = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Schedule a Visit
+                {t.location_schedule_visit}
               </motion.button>
               <motion.button
                 className="px-8 py-3 glass text-gray-800 dark:text-white rounded-lg font-semibold hover:bg-white/20 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Download Brochure
+                {t.location_download_brochure}
               </motion.button>
             </div>
           </div>

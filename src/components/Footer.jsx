@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin, Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   const socialLinks = [
     { icon: <Facebook className="w-5 h-5" />, href: "#", label: "Facebook" },
     { icon: <Twitter className="w-5 h-5" />, href: "#", label: "Twitter" },
@@ -12,12 +15,12 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About KOICA", href: "#about-koica" },
-    { name: "Samarkand Center", href: "#samarkand-center" },
-    { name: "Features", href: "#features" },
-    { name: "Location", href: "#location" },
-    { name: "Gallery", href: "#gallery" },
+    { name: t.nav_home, href: "#home" },
+    { name: t.nav_about_koica, href: "#about-koica" },
+    { name: t.nav_samarkand_center, href: "#samarkand-center" },
+    { name: t.nav_features, href: "#features" },
+    { name: t.nav_location, href: "#location" },
+    { name: t.nav_gallery, href: "#gallery" },
   ];
 
   const currentYear = new Date().getFullYear();
@@ -35,10 +38,10 @@ const Footer = () => {
           >
             <h3 className="text-2xl font-bold gradient-text mb-4">KOICA</h3>
             <p className="text-gray-400 mb-4">
-              Korea International Cooperation Agency Training Center Samarkand
+              {t.footer_koica_description}
             </p>
             <p className="text-gray-400 text-sm">
-              Empowering Uzbekistan's future through quality IT education and Korean partnership.
+              {t.footer_description}
             </p>
           </motion.div>
 
@@ -49,7 +52,7 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer_quick_links}</h4>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -72,19 +75,19 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer_contact_info}</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-purple-400" />
-                <span className="text-gray-400 text-sm">Samarkand, Uzbekistan</span>
+                <span className="text-gray-400 text-sm">{t.location_address_content}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-purple-400" />
-                <span className="text-gray-400 text-sm">+998 90 123 45 67</span>
+                <span className="text-gray-400 text-sm">{t.location_phone_content}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-purple-400" />
-                <span className="text-gray-400 text-sm">info@koica.uz</span>
+                <span className="text-gray-400 text-sm">{t.location_email_content}</span>
               </div>
             </div>
           </motion.div>
@@ -96,7 +99,7 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer_follow_us}</h4>
             <div className="flex space-x-3 mb-6">
               {socialLinks.map((social, index) => (
                 <motion.a
@@ -112,7 +115,7 @@ const Footer = () => {
               ))}
             </div>
             <p className="text-gray-400 text-sm">
-              Stay connected for updates and news.
+              {t.footer_stay_connected}
             </p>
           </motion.div>
         </div>
@@ -127,11 +130,11 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} KOICA Training Center Samarkand. All rights reserved.
+              © {currentYear} KOICA Training Center Samarkand. {t.footer_rights}
             </div>
             <div className="text-gray-400 text-sm">
-              <span className="gradient-text font-semibold">Group 20 Project</span> - 
-              <span className="ml-2">Created with ❤️ for KOICA</span>
+              <span className="gradient-text font-semibold">{t.footer_group_project}</span> - 
+              <span className="ml-2">{t.footer_created_with}</span>
             </div>
           </div>
         </motion.div>

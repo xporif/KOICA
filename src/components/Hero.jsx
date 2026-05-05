@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero = () => {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient animation */}
@@ -23,7 +25,7 @@ const Hero = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
           >
-            KOICA Training Center
+            {t.hero_title}
           </motion.h1>
           <motion.h2
             className="text-3xl md:text-5xl font-bold text-white mb-4"
@@ -31,7 +33,7 @@ const Hero = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8, type: "spring" }}
           >
-            Samarkand
+            {t.hero_subtitle}
           </motion.h2>
           <motion.p
             className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto"
@@ -39,7 +41,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            Korea International Cooperation Agency
+            {t.hero_description}
           </motion.p>
         </motion.div>
 
@@ -55,7 +57,7 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Learn More
+            {t.hero_learn_more}
           </motion.a>
           <motion.a
             href="#location"
@@ -63,7 +65,7 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Visit Us
+            {t.hero_visit_us}
           </motion.a>
         </motion.div>
 

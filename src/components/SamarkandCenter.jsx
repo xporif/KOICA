@@ -1,67 +1,69 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Computer, Users, Award, BookOpen, Wifi, Clock } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const SamarkandCenter = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const { t } = useLanguage();
 
   const facilities = [
     {
       icon: <Computer className="w-6 h-6" />,
-      title: "Modern Computer Labs",
-      description: "State-of-the-art computer labs with latest technology and high-speed internet"
+      title: t.center_modern_labs,
+      description: t.center_modern_labs_desc
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Expert Instructors",
-      description: "Experienced Korean and local instructors providing quality education"
+      title: t.center_expert_instructors,
+      description: t.center_expert_instructors_desc
     },
     {
       icon: <Award className="w-6 h-6" />,
-      title: "Certification Programs",
-      description: "Internationally recognized certification programs and diplomas"
+      title: t.center_certification,
+      description: t.center_certification_desc
     },
     {
       icon: <BookOpen className="w-6 h-6" />,
-      title: "Digital Library",
-      description: "Comprehensive digital library with access to global learning resources"
+      title: t.center_digital_library,
+      description: t.center_digital_library_desc
     },
     {
       icon: <Wifi className="w-6 h-6" />,
-      title: "High-Speed Internet",
-      description: "High-speed internet connectivity throughout the facility"
+      title: t.center_high_speed_internet,
+      description: t.center_high_speed_internet_desc
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Flexible Schedule",
-      description: "Flexible class schedules to accommodate working professionals"
+      title: t.center_flexible_schedule,
+      description: t.center_flexible_schedule_desc
     }
   ];
 
   const courses = [
     {
-      title: "Web Development",
-      duration: "6 months",
-      level: "Beginner to Advanced",
-      description: "Learn modern web development technologies including React, Node.js, and cloud deployment."
+      title: t.center_web_dev,
+      duration: t.center_web_dev_duration,
+      level: t.center_web_dev_level,
+      description: t.center_web_dev_desc
     },
     {
-      title: "Mobile App Development",
-      duration: "4 months",
-      level: "Intermediate",
-      description: "Master mobile app development for iOS and Android platforms using React Native."
+      title: t.center_mobile_dev,
+      duration: t.center_mobile_dev_duration,
+      level: t.center_mobile_dev_level,
+      description: t.center_mobile_dev_desc
     },
     {
-      title: "Data Science & AI",
-      duration: "8 months",
-      level: "Advanced",
-      description: "Comprehensive training in machine learning, data analysis, and artificial intelligence."
+      title: t.center_data_science,
+      duration: t.center_data_science_duration,
+      level: t.center_data_science_level,
+      description: t.center_data_science_desc
     },
     {
-      title: "Cybersecurity",
-      duration: "3 months",
-      level: "Intermediate",
-      description: "Learn essential cybersecurity skills and best practices for protecting digital assets."
+      title: t.center_cybersecurity,
+      duration: t.center_cybersecurity_duration,
+      level: t.center_cybersecurity_level,
+      description: t.center_cybersecurity_desc
     }
   ];
 
@@ -85,10 +87,10 @@ const SamarkandCenter = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-            KOICA Training Center Samarkand
+            {t.center_title}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            A premier educational facility bringing Korean expertise and technology to Uzbekistan's future IT leaders.
+            {t.center_description}
           </p>
         </motion.div>
 
@@ -101,19 +103,22 @@ const SamarkandCenter = () => {
           viewport={{ once: true }}
         >
           <div className="glass rounded-full p-1 flex space-x-2">
-            {['overview', 'courses', 'gallery'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  activeTab === tab
-                    ? 'gradient-bg text-white'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white'
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
+            {[t.center_overview, t.center_courses, t.center_gallery].map((tab, index) => {
+              const tabKey = ['overview', 'courses', 'gallery'][index];
+              return (
+                <button
+                  key={tabKey}
+                  onClick={() => setActiveTab(tabKey)}
+                  className={`px-6 py-2 rounded-full transition-all ${
+                    activeTab === tabKey
+                      ? 'gradient-bg text-white'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white'
+                  }`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -127,38 +132,35 @@ const SamarkandCenter = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               <div className="glass rounded-2xl p-8">
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-                  About the Center
+                  {t.center_about}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                  The KOICA Training Center in Samarkand is a state-of-the-art educational facility 
-                  established to provide high-quality IT education and training to Uzbek students and professionals.
+                  {t.center_about_text}
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  With modern classrooms, advanced computer labs, and experienced instructors from Korea 
-                  and Uzbekistan, we offer comprehensive programs designed to meet the growing demand for 
-                  IT skills in the digital economy.
+                  {t.center_about_text2}
                 </p>
               </div>
               <div className="glass rounded-2xl p-8">
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-                  Key Achievements
+                  {t.center_achievements}
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">Over 2,000 graduates since 2019</span>
+                    <span className="text-gray-600 dark:text-gray-300">{t.center_achievement1}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">85% employment rate within 6 months</span>
+                    <span className="text-gray-600 dark:text-gray-300">{t.center_achievement2}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">Partnerships with leading tech companies</span>
+                    <span className="text-gray-600 dark:text-gray-300">{t.center_achievement3}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">Regular workshops and seminars</span>
+                    <span className="text-gray-600 dark:text-gray-300">{t.center_achievement4}</span>
                   </div>
                 </div>
               </div>
@@ -229,7 +231,7 @@ const SamarkandCenter = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Learn More
+                    {t.learn_more}
                   </motion.button>
                 </motion.div>
               ))}

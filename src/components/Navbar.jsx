@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Navbar = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t, availableLanguages } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +17,12 @@ const Navbar = ({ darkMode, setDarkMode }) => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About KOICA', href: '#about-koica' },
-    { name: 'Samarkand Center', href: '#samarkand-center' },
-    { name: 'Features', href: '#features' },
-    { name: 'Location', href: '#location' },
-    { name: 'Gallery', href: '#gallery' },
+    { name: t.nav_home, href: '#home' },
+    { name: t.nav_about_koica, href: '#about-koica' },
+    { name: t.nav_samarkand_center, href: '#samarkand-center' },
+    { name: t.nav_features, href: '#features' },
+    { name: t.nav_location, href: '#location' },
+    { name: t.nav_gallery, href: '#gallery' },
   ];
 
   return (
@@ -60,8 +62,46 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             </div>
           </div>
 
-          {/* Dark Mode Toggle & Mobile Menu Button */}
-          <div className="flex items-center space-x-4">
+          {/* Language Switcher & Dark Mode Toggle & Mobile Menu Button */}
+          <div className="flex items-center space-x-2">
+            {/* Language Switcher */}
+            <div className="hidden md:flex items-center space-x-1 glass rounded-full p-1">
+              {availableLanguages.map((lang) => (
+                <motion.button
+                  key={lang.code}
+                  onClick={() => setLanguage(lang.code)}
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                    language === lang.code
+                      ? 'gradient-bg text-white'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  title={lang.name}
+                >
+                  <span className="flex items-center space-x-1">
+                    <span>{lang.flag}</span>
+                    <span className="text-xs">{lang.name}</span>
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Mobile Language Switcher */}
+            <div className="md:hidden">
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="px-2 py-1 rounded-lg glass text-sm font-medium text-gray-700 dark:text-gray-300 bg-white/20 dark:bg-black/20 border-0 focus:ring-0"
+              >
+                {availableLanguages.map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.flag} {lang.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <motion.button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-lg glass hover:bg-white/20 transition-colors"
@@ -93,6 +133,30 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             exit={{ opacity: 0, y: -20 }}
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {/* Mobile Language Switcher */}
+              <div className="flex justify-center mb-2">
+                <div className="flex items-center space-x-1 glass rounded-full p-1">
+                  {availableLanguages.map((lang) => (
+                    <motion.button
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${
+                        language === lang.code
+                          ? 'gradient-bg text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="flex items-center space-x-1">
+                        <span>{lang.flag}</span>
+                        <span>{lang.name}</span>
+                      </span>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+              
               {navItems.map((item) => (
                 <motion.a
                   key={item.name}

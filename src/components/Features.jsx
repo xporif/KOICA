@@ -1,32 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Monitor, Cpu, Globe, Briefcase } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Features = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: <Monitor className="w-12 h-12" />,
-      title: "IT Education",
-      description: "Comprehensive IT training programs covering web development, mobile apps, data science, and cybersecurity.",
-      highlights: ["Modern Curriculum", "Hands-on Learning", "Industry Experts"]
+      title: t.features_it_education,
+      description: t.features_it_education_desc,
+      highlights: [t.features_modern_curriculum, t.features_hands_on_learning, t.features_industry_experts]
     },
     {
       icon: <Cpu className="w-12 h-12" />,
-      title: "Modern Technology",
-      description: "State-of-the-art facilities equipped with the latest hardware, software, and high-speed internet.",
-      highlights: ["Advanced Labs", "Cloud Computing", "AI Tools"]
+      title: t.features_modern_tech,
+      description: t.features_modern_tech_desc,
+      highlights: [t.features_advanced_labs, t.features_cloud_computing, t.features_ai_tools]
     },
     {
       icon: <Globe className="w-12 h-12" />,
-      title: "Korean Partnership",
-      description: "Strong collaboration with Korean educational institutions and tech companies for knowledge exchange.",
-      highlights: ["Expert Instructors", "Exchange Programs", "Korean Standards"]
+      title: t.features_korean_partnership,
+      description: t.features_korean_partnership_desc,
+      highlights: [t.features_expert_instructors, t.features_exchange_programs, t.features_korean_standards]
     },
     {
       icon: <Briefcase className="w-12 h-12" />,
-      title: "Career Opportunities",
-      description: "Excellent job placement support and connections with leading tech companies in Uzbekistan and beyond.",
-      highlights: ["Job Placement", "Career Counseling", "Networking Events"]
+      title: t.features_career_opportunities,
+      description: t.features_career_opportunities_desc,
+      highlights: [t.features_job_placement, t.features_career_counseling, t.features_networking_events]
     }
   ];
 
@@ -41,10 +44,10 @@ const Features = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-            Our Features
+            {t.features_title}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Discover what makes KOICA Training Center the premier destination for IT education in Uzbekistan.
+            {t.features_description}
           </p>
         </motion.div>
 
@@ -110,19 +113,19 @@ const Features = () => {
         >
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
-              Our Impact in Numbers
+              {t.features_impact_numbers}
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Transforming lives through quality IT education
+              {t.features_impact_desc}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { number: "2000+", label: "Graduates" },
-              { number: "50+", label: "Expert Instructors" },
-              { number: "20+", label: "IT Courses" },
-              { number: "85%", label: "Employment Rate" }
+              { number: "2000+", label: t.features_graduates },
+              { number: "50+", label: t.features_instructors },
+              { number: "20+", label: t.features_courses },
+              { number: "85%", label: t.features_employment_rate }
             ].map((stat, index) => (
               <motion.div
                 key={index}

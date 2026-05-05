@@ -1,80 +1,82 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const { t } = useLanguage();
 
   const galleryImages = [
     {
       id: 1,
-      title: "Modern Computer Lab",
-      category: "Facilities",
-      description: "State-of-the-art computer lab with latest technology",
+      title: t.gallery_modern_lab,
+      category: t.gallery_facilities,
+      description: t.gallery_facilities_desc,
       emoji: "💻"
     },
     {
       id: 2,
-      title: "Classroom Session",
-      category: "Education",
-      description: "Interactive learning sessions with expert instructors",
+      title: t.gallery_classroom,
+      category: t.gallery_education,
+      description: t.gallery_education_desc,
       emoji: "📚"
     },
     {
       id: 3,
-      title: "Students Working",
-      category: "Students",
-      description: "Students engaged in collaborative project work",
+      title: t.gallery_students_working,
+      category: t.gallery_students,
+      description: t.gallery_students_desc,
       emoji: "👥"
     },
     {
       id: 4,
-      title: "Graduation Ceremony",
-      category: "Achievement",
-      description: "Celebrating the success of our graduates",
+      title: t.gallery_graduation,
+      category: t.gallery_achievement,
+      description: t.gallery_achievement_desc,
       emoji: "🎓"
     },
     {
       id: 5,
-      title: "Technology Equipment",
-      category: "Facilities",
-      description: "Modern equipment and infrastructure",
+      title: t.gallery_equipment,
+      category: t.gallery_facilities,
+      description: t.gallery_facilities_desc,
       emoji: "🖥️"
     },
     {
       id: 6,
-      title: "Group Discussion",
-      category: "Education",
-      description: "Interactive group discussions and brainstorming",
+      title: t.gallery_discussion,
+      category: t.gallery_education,
+      description: t.gallery_education_desc,
       emoji: "💡"
     },
     {
       id: 7,
-      title: "Korean Instructor",
-      category: "Education",
-      description: "Korean expert instructor teaching advanced topics",
+      title: t.gallery_korean_instructor,
+      category: t.gallery_education,
+      description: t.gallery_education_desc,
       emoji: "👨‍🏫"
     },
     {
       id: 8,
-      title: "Student Presentation",
-      category: "Students",
-      description: "Students presenting their projects",
+      title: t.gallery_presentation,
+      category: t.gallery_students,
+      description: t.gallery_students_desc,
       emoji: "📊"
     },
     {
       id: 9,
-      title: "Library Study Area",
-      category: "Facilities",
-      description: "Quiet study area in our digital library",
+      title: t.gallery_library,
+      category: t.gallery_facilities,
+      description: t.gallery_facilities_desc,
       emoji: "📖"
     }
   ];
 
-  const categories = ["All", "Facilities", "Education", "Students", "Achievement"];
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = [t.all, t.gallery_facilities, t.gallery_education, t.gallery_students, t.gallery_achievement];
+  const [selectedCategory, setSelectedCategory] = useState(t.all);
 
-  const filteredImages = selectedCategory === "All" 
+  const filteredImages = selectedCategory === t.all 
     ? galleryImages 
     : galleryImages.filter(img => img.category === selectedCategory);
 
@@ -89,10 +91,10 @@ const Gallery = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-            Gallery
+            {t.gallery_title}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Explore our modern facilities, engaged students, and the vibrant learning environment at KOICA Training Center.
+            {t.gallery_description}
           </p>
         </motion.div>
 
@@ -236,17 +238,17 @@ const Gallery = () => {
           viewport={{ once: true }}
         >
           <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-            Want to See More?
+            {t.gallery_want_see_more}
           </h3>
           <p className="text-gray-600 dark:text-gray-300 mb-8">
-            Visit our campus to experience the vibrant learning environment firsthand.
+            {t.gallery_visit_desc}
           </p>
           <motion.button
             className="px-8 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Schedule a Campus Tour
+            {t.gallery_schedule_tour}
           </motion.button>
         </motion.div>
       </div>
