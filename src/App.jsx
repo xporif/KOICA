@@ -9,6 +9,7 @@ import Features from './components/Features';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
+import DropoutRiskAnalyzer from './components/DropoutRiskAnalyzer';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -34,17 +35,27 @@ function App() {
     return <Loading />;
   }
 
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
   return (
     <LanguageProvider>
       <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
         <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 min-h-screen">
           <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-          <Hero />
-          <AboutKoica />
-          <SamarkandCenter />
-          <Features />
-          <LocationContact />
-          <Gallery />
+          
+          {isLoggedIn ? (
+            <DropoutRiskAnalyzer />
+          ) : (
+            <>
+              <Hero />
+              <AboutKoica />
+              <SamarkandCenter />
+              <Features />
+              <LocationContact />
+              <Gallery />
+            </>
+          )}
+          
           <Footer />
         </div>
       </div>

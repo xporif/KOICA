@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import LoginModal from './LoginModal';
 
 const Navbar = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { language, setLanguage, t, availableLanguages } = useLanguage();
 
   useEffect(() => {
@@ -99,6 +101,19 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               </select>
             </div>
 
+            {/* Login Button */}
+            <motion.button
+              onClick={() => setShowLoginModal(true)}
+              className="p-2 rounded-lg glass hover:bg-white/20 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              title="Login"
+            >
+              <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </motion.button>
+
             <motion.button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-lg glass hover:bg-white/20 transition-colors"
@@ -167,6 +182,13 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           </motion.div>
         )}
       </div>
+
+      {/* Login Modal */}
+      <LoginModal 
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLogin={() => window.location.reload()}
+      />
     </motion.nav>
   );
 };
