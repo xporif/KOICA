@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Users, Calendar, LogOut, User, Phone, MapPin, CalendarDays } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Users, Calendar, LogOut, User, Phone, MapPin, CalendarDays, Home, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { initialStudents } from '../data/students';
 import AddStudentModal from './AddStudentModal';
@@ -93,6 +94,14 @@ const StudentDashboard = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              <Link
+                to="/"
+                className="glass px-4 py-2 rounded-lg font-medium flex items-center space-x-2 hover:bg-blue-500/10 transition-colors"
+              >
+                <Home className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-blue-600 dark:text-blue-400">{t.back_to_site}</span>
+              </Link>
+              
               <motion.button
                 onClick={() => setShowAddModal(true)}
                 className="gradient-bg text-white px-4 py-2 rounded-lg font-medium flex items-center space-x-2"

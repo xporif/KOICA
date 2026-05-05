@@ -250,7 +250,8 @@ const translations = {
     select_region: "Viloyatni tanlang",
     district_placeholder: "Tumanni kiriting",
     phone_placeholder: "Telefon raqamini kiriting",
-    all_fields_required: "Barcha maydonlar to'ldirilishi shart!"
+    all_fields_required: "Barcha maydonlar to'ldirilishi shart!",
+    back_to_site: "Asosiy sahifaga qaytish"
   },
   
   en: {
@@ -500,6 +501,7 @@ const translations = {
     district_placeholder: "Enter district",
     phone_placeholder: "Enter phone number",
     all_fields_required: "All fields are required!",
+    back_to_site: "Back to Main Site",
     filter: "Filter",
     next: "Next",
     previous: "Previous",
@@ -758,7 +760,8 @@ const translations = {
     select_region: "지역 선택",
     district_placeholder: "구역 입력",
     phone_placeholder: "전화번호 입력",
-    all_fields_required: "모든 필드가 필요합니다!"
+    all_fields_required: "모든 필드가 필요합니다!",
+    back_to_site: "메인 사이트로 돌아가기"
   }
 };
 
